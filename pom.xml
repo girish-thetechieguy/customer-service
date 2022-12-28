@@ -14,7 +14,8 @@
 	<name>customer-service</name>
 	<description>It is the key service where users related services been provided by this service</description>
 	<properties>
-		<java.version>1.8</java.version>
+		<maven.compiler.target>11</maven.compiler.target>
+		<maven.compiler.source>11</maven.compiler.source>
 		<spring-cloud.version>2021.0.5</spring-cloud.version>
 	</properties>
 	<dependencies>
@@ -103,4 +104,12 @@
 <!--		</plugins>-->
 <!--	</build>-->
 
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+		</plugins>
+	</build>
 </project>
