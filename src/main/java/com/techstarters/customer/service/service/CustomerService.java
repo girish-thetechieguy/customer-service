@@ -1,10 +1,12 @@
 package com.techstarters.customer.service.service;
 
+import com.techstarters.customer.service.config.PropertiesConfigHelper;
 import com.techstarters.customer.service.entity.Customer;
 import com.techstarters.customer.service.entity.CustomerAddress;
 import com.techstarters.customer.service.entity.CustomerAddressList;
 import com.techstarters.customer.service.entity.CustomerAddressResponseTemplate;
 import com.techstarters.customer.service.repository.CustomerRepository;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,6 +25,10 @@ public class CustomerService {
     @Autowired
     private RestTemplate restTemplate;
 
+    @Setter
+    @Autowired
+    private PropertiesConfigHelper propertiesConfigHelper;
+
     public Customer registerCustomer(Customer customer) {
         log.info("Inside CustomerService and method registerCustomer()");
         return customerRepository.save(customer);
@@ -37,7 +43,7 @@ public class CustomerService {
         log.info("Inside CustomerService and method getCustomerDetailsById()");
         Customer customerDetails = customerRepository.findByCustomerId(customerAddressId);
         CustomerAddressList customerAddressList =
-                restTemplate.getForObject("http://CUSTOMER-ADDRESS-SERVICE/address/customer/"+customerDetails.getCustomerId(),
+                restTemplate.getForObject(propertiesConfigHelper.getCustomerAddressUrl()+customerDetails.getCustomerId(),
                         CustomerAddressList.class);
         CustomerAddressResponseTemplate customerAddressResponseTemplate = new CustomerAddressResponseTemplate();
         customerAddressResponseTemplate.setCustomerAddressList(customerAddressList);
